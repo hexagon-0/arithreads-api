@@ -15,15 +15,15 @@ describe('users', function () {
       const response = await client.post('/users/')
         .send({
           username: 'lucas',
-          email: 'lucas@example.com',
           password: '01234567',
         })
         .expect(201);
 
-      expect(response.body).toEqual({
+      expect(response.body).toHaveProperty('passwordHash');
+
+      expect(response.body).toMatchObject({
         id: 1,
         username: 'lucas',
-        email: 'lucas@example.com',
         password: '01234567',
       });
     });
@@ -32,14 +32,12 @@ describe('users', function () {
       const response = await client.post('/users/')
         .send({
           username: "",
-          email: "",
           password: "",
         })
         .expect(400);
       
       expect(response.body).toEqual({
         username: ["username must be at least 3 characters"],
-        email: ["email is a required field"],
         password: ["password must be at least 8 characters"],
       });
     });

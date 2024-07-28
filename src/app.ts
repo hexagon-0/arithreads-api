@@ -1,6 +1,7 @@
 import express from 'express';
 import { object, string, InferType, ValidationError } from 'yup';
 import { StatusCodes } from 'http-status-codes';
+import { hashPassword } from './security';
 
 const app = express();
 
@@ -8,7 +9,6 @@ const users = express.Router();
 
 const userSchema = object({
   username: string().required().min(3),
-  email: string().required().email(),
   password: string().required().min(8),
 });
 
@@ -21,6 +21,7 @@ users.post('/', async (req, res) => {
     return res.status(StatusCodes.CREATED).json({
       id: 1,
       ...user,
+      passwordHash: await hashPassword(user.password),
     });
   } catch (err) {
     if (err instanceof ValidationError) {
