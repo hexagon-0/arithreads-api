@@ -1,6 +1,8 @@
 import express from 'express';
 import { validate } from './middleware/validation';
 import * as UsersController from './controllers/users';
+import * as PostsController from './controllers/posts';
+import { ensureAuth } from './middleware/ensure_auth';
 
 const app = express();
 
@@ -16,5 +18,10 @@ const users = express.Router();
 users.post('/', validate(UsersController.createReqSchema), UsersController.createUser);
 users.post('/login', validate(UsersController.authReqSchema), UsersController.authenticate);
 app.use('/users', users);
+
+const posts = express.Router();
+posts.get('/', PostsController.getAll);
+posts.post('/', ensureAuth, validate(PostsController.createReqSchema), PostsController.create);
+app.use('/posts', posts);
 
 export { app };
