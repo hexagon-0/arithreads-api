@@ -19,27 +19,23 @@ describe('users', function () {
         })
         .expect(201);
 
-      expect(response.body).toHaveProperty('passwordHash');
+      expect(response.body).toHaveProperty('id');
 
-      expect(response.body).toMatchObject({
-        id: 1,
-        username: 'lucas',
-        password: '01234567',
-      });
+      expect(response.body).toMatchObject({ username: 'lucas' });
     });
 
     it('should validate the request body', async function () {
       const response = await client.post('/users/')
         .send({
-          username: "",
-          password: "",
+          username: "me",
+          password: "123",
         })
         .expect(400);
       
-      expect(response.body).toEqual({
-        username: ["username must be at least 3 characters"],
-        password: ["password must be at least 8 characters"],
-      });
+      expect(response.body).toEqual([
+        "username must be at least 3 characters",
+        "password must be at least 8 characters",
+      ]);
     });
   });
 });
