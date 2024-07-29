@@ -3,10 +3,12 @@ import { validate } from './middleware/validation';
 import * as UsersController from './controllers/users';
 import * as PostsController from './controllers/posts';
 import { ensureAuth } from './middleware/ensure_auth';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (_req, res) => {
   return res.json({
