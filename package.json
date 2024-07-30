@@ -14,7 +14,8 @@
     "migrate:make": "knex --knexfile ./src/database/environment.ts migrate:make",
     "migrate:latest": "knex --knexfile ./src/database/environment.ts migrate:latest",
     "migrate:rollback": "knex --knexfile ./src/database/environment.ts migrate:rollback",
-    "migrate:rollback-all": "knex --knexfile ./src/database/environment.ts migrate:rollback --all"
+    "migrate:rollback-all": "knex --knexfile ./src/database/environment.ts migrate:rollback --all",
+    "vercel-build": "echo nobuild"
   },
   "dependencies": {
     "argon2": "^0.40.3",

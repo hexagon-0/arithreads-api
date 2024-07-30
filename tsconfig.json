@@ -110,5 +110,6 @@
     "./jest.config.ts",
     "./tests",
     "./dist",
+    "./api"
   ]
 }
